@@ -37,6 +37,7 @@ add_action( 'add_meta_boxes', 'nsync_call_meta_box', 10, 2 );
  * @return void
  */
 function nsync_display_meta_box( $post, $args ) {
+    wp_nonce_field( 'bye-line-save', 'nsync_bye_line_noncename' );
     $nsync_display_val = nsync_get_bye_line_meta( $post->ID );
 ?>
     <p>
@@ -56,8 +57,6 @@ function nsync_get_bye_line_meta( $post_id ){
     if ( ! empty( $get_bye_line_val ) ){
         $byebyemetavalue = get_post_meta( $post_id, 'byebyebye-line', true );
         return esc_html( $byebyemetavalue );
-    } else {
-        return '!';
     }
 }
 
@@ -73,6 +72,10 @@ function nsync_save_meta_box( $post_id, $post ) {
     }
 
     if ( ! isset( $_POST['byeline'] ) ) {
+        return;
+    }
+
+    if ( ! wp_verify_nonce( $_POST['nsync_bye_line_noncename'], 'bye-line-save' ) ){
         return;
     }
 
