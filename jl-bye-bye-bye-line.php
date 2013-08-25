@@ -57,6 +57,10 @@ function nsync_display_meta_box( $post, $args ) {
  * @param  object    $post       The current post object.
  */
 function nsync_save_meta_box( $post_id, $post ) {
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ){
+        return;
+    }
+
     if ( ! isset( $_POST['byeline'] ) ) {
         return;
     }
