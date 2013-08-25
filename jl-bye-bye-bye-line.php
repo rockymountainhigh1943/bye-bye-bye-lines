@@ -79,7 +79,7 @@ add_action( 'save_post', 'nsync_save_meta_box', 10, 2 );
  */
 function nsync_print_byebyebye_line( $content ) {
     $byebyebye_line = get_post_meta( get_the_ID(), 'byebyebye-line', true );
-    return $content . $byebyebye_line;
+    return $content . esc_html( $byebyebye_line );
 }
 
 add_filter( 'the_content', 'nsync_print_byebyebye_line' );
