@@ -37,17 +37,28 @@ add_action( 'add_meta_boxes', 'nsync_call_meta_box', 10, 2 );
  * @return void
  */
 function nsync_display_meta_box( $post, $args ) {
+    $nsync_display_val = nsync_get_bye_line_meta( $post->ID );
 ?>
     <p>
         <label for="byeline">
             <?php _e( 'Bye Bye Bye Line', 'byebyebye_lines' ); ?>:&nbsp;
         </label>
-        <input type="text" class="widefat" name="byeline" value="" />
+        <input type="text" class="widefat" name="byeline" value="<?php echo $nsync_display_val; ?>" />
         <em>
             <?php _e( 'HTML is not allowed', 'byebyebye_lines' ); ?>
         </em>
     </p>
 <?php
+}
+
+function nsync_get_bye_line_meta( $post_id ){
+    $get_bye_line_val = get_post_meta( $post_id, 'byebyebye-line', true );
+    if ( ! empty( $get_bye_line_val ) ){
+        $byebyemetavalue = get_post_meta( $post_id, 'byebyebye-line', true );
+        return esc_html( $byebyemetavalue );
+    } else {
+        return '!';
+    }
 }
 
 /**
